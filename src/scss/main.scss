@@ -1,0 +1,16 @@
+@import '~normalize.css';
+@import 'variables.scss';
+@import 'typography';
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Merriweather', serif;
+  color: $text-color;
+  font-size: 14px;
+  line-height: 1.5;
+}
