@@ -1,6 +1,6 @@
 <template>
   <div class="cards-list">
-    <Card />
+    <Card v-for="picture of pictures" :key="picture.id" :picture="picture" />
   </div>
 </template>
 
@@ -10,6 +10,12 @@ import Card from '@/components/Card'
 export default {
   components: {
     Card
+  },
+
+  computed: {
+    pictures() {
+      return this.$store.getters['pictures/pictures']
+    }
   }
 }
 </script>

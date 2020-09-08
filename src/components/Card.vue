@@ -1,16 +1,28 @@
 <template>
-  <div class="card">
-    <img class="card__image" src="../assets/pictures/1.png" />
+  <div class="card" :class="picture.isSold ? 'card_disabled' : ''">
+    <img class="card__image" :src="picture.imgSrc" />
 
     <div class="card__body">
-      <h2 class="card__title">"Рождение Венеры"<br />Сандро Боттичелли</h2>
+      <h2 class="card__title">
+        &laquo;{{ picture.title }}&raquo;
+        <br />
+        {{ picture.autor }}
+      </h2>
 
-      <div class="card__price-block">
-        <div class="card__price_style_strikethrough">1 000 000 $</div>
-        <div class="card__price">1 000 000 $</div>
+      <div v-if="picture.isSold" class="card__sold-text">
+        Продана на аукционе
       </div>
 
-      <Button class="card__button">Купить</Button>
+      <template v-else>
+        <div class="card__price-block">
+          <div v-if="picture.oldPrice" class="card__price_style_strikethrough">
+            {{ picture.oldPrice }}
+          </div>
+          <div class="card__price">{{ picture.price }}</div>
+        </div>
+
+        <Button class="card__button">Купить</Button>
+      </template>
     </div>
   </div>
 </template>
@@ -21,6 +33,10 @@ import Button from '@/components/Button'
 export default {
   components: {
     Button
+  },
+
+  props: {
+    picture: Object
   }
 }
 </script>
@@ -73,6 +89,11 @@ export default {
   &__button {
     flex: 0 1 auto;
     //background-color: #382e2b;
+  }
+
+  &__sold-text {
+    font-size: 16px;
+    font-weight: 700;
   }
 
   &_disabled {
