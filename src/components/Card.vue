@@ -21,7 +21,14 @@
           <div class="card__price">{{ picture.price }}</div>
         </div>
 
-        <Button class="card__button">Купить</Button>
+        <Button
+          class="card__button"
+          :class="picture.isInCart ? 'button_done' : ''"
+          @click="toggleCart(picture.id)"
+          :loading="loading"
+        >
+          {{ picture.isInCart ? 'В корзине' : 'Купить' }}
+        </Button>
       </template>
     </div>
   </div>
@@ -37,6 +44,23 @@ export default {
 
   props: {
     picture: Object
+  },
+
+  data: () => ({
+    loading: false
+  }),
+
+  methods: {
+    async toggleCart(id) {
+      try {
+        this.loading = true
+        await this.$store.dispatch('pictures/toggleCart', id)
+      } catch (e) {
+        throw new Error('Ошибка')
+      } finally {
+        this.loading = false
+      }
+    }
   }
 }
 </script>

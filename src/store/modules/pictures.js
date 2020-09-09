@@ -4,7 +4,7 @@ export default {
   namespaced: true,
 
   state: {
-    pictures: [
+    pictures: JSON.parse(localStorage.getItem('pictures')) || [
       {
         id: 1,
         imgSrc: require('@/assets/pictures/1.jpg'),
@@ -54,10 +54,12 @@ export default {
 
   mutations: {
     toggleCart(state, id) {
-      state.pictures.map(item => {
+      state.pictures = state.pictures.map(item => {
         if (item.id === id) item.isInCart = !item.isInCart
         return item
       })
+
+      localStorage.setItem('pictures', JSON.stringify(state.pictures))
     }
   },
 

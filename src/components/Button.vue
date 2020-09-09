@@ -1,13 +1,27 @@
 <template>
-  <button type="button" class="button">
+  <button
+    type="button"
+    class="button"
+    :class="loading ? 'button_loading' : ''"
+    @click="$emit('click')"
+  >
     <slot />
   </button>
 </template>
+
+<script>
+export default {
+  props: {
+    loading: Boolean
+  }
+}
+</script>
 
 <style lang="scss">
 @import '../scss/variables.scss';
 
 .button {
+  position: relative;
   display: inline-block;
   min-height: 48px;
   font-weight: 700;
@@ -47,6 +61,42 @@
       width: 18px;
       background: url('../assets/icons/check.svg') no-repeat;
     }
+  }
+
+  &::after {
+    content: '';
+    animation: spin 500ms linear infinite;
+    position: absolute;
+    top: calc(50% - 0.5rem);
+    left: calc(50% - 0.5rem);
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid #fff;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-radius: 50%;
+    opacity: 0;
+  }
+
+  &_loading {
+    color: transparent;
+
+    &::before {
+      display: none;
+    }
+
+    &::after {
+      opacity: 1;
+    }
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
   }
 }
 </style>
